@@ -2,12 +2,12 @@
   "name": "rxjs_playground",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "build": "webpack",
     "watch": "nodemon ./dist/bundle.js",
-    "start:dev": "npm watch & webpack-dev-server --inline --hot",
-    "start": "npm watch & webpack-dev-server --inline --hot --open 'Google Chrome'"
+    "start:dev": "npm run build & webpack-dev-server --inline --hot",
+    "start": "npm run build & webpack-dev-server --inline --hot --open 'Google Chrome'"
   },
   "author": "",
   "license": "ISC",

@@ -7,7 +7,13 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'My Awesome application',
+      template: './index.html',
+      filename: './index.html',
+    }),
+  ],
   mode: 'development',
   devtool: 'source-map',
   module: {

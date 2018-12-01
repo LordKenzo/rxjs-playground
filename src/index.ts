@@ -4,4 +4,5 @@ import $ from 'jquery';
 
 let ob: Observable<number> = of(1, 2, 3);
 ob.subscribe(data => console.log(data));
-$('body').text(moment().format());
+$('#time').text(moment().format());
+console.log('Hello!!!');
