@@ -1,14 +1,31 @@
+import { getItems } from './../lib/suggest';
+
 export function autocomplete() {
   const $title = document.getElementById('title');
   const $results = document.getElementById('results');
   const eventName: any = 'keyup';
+  let lastQuery: string | null = null;
+  const lastTimeOut: number | null = null;
+  let nextQueryId: number = 0;
   if ($title != null && $results != null) {
     $title.addEventListener(eventName, (event: KeyboardEvent) => {
       const titleValue = (event.target as HTMLInputElement).value;
-      showSuggest(titleValue, 'li').then(($items: HTMLLIElement[]) => {
-        $results.innerHTML = '';
-        $items.map(item => $results.appendChild(item));
-      });
+      if (titleValue === lastQuery) {
+        return;
+      }
+      lastQuery = titleValue;
+      if (lastTimeOut) {
+        window.clearTimeout(lastTimeOut);
+      }
+      const currentQueryId = ++nextQueryId;
+      window.setTimeout(() => {
+        showSuggest(titleValue, 'li').then(($items: HTMLLIElement[]) => {
+          if (currentQueryId === nextQueryId) {
+            $results.innerHTML = '';
+            $items.map(item => $results.appendChild(item));
+          }
+        });
+      }, 500);
     });
   }
 }
@@ -20,18 +37,5 @@ function showSuggest(text: string, element: string): Promise<any> {
       liElement.textContent = item;
       return liElement;
     });
-  });
-}
-
-/**
- * Library
- */
-
-function getItems(item: string): Promise<string[]> {
-  return new Promise((resolve: any, reject: any) => {
-    window.setTimeout(
-      () => resolve([item, 'Other Item', `Another Item Math.random()`]),
-      500 + Math.random() * 1000,
-    );
   });
 }
