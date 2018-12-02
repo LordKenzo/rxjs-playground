@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { delay, concatMap } from 'rxjs/operators';
+import { delay, concatMap, tap } from 'rxjs/operators';
 import moment from 'moment';
 import $ from 'jquery';
 import { autocomplete } from './autocomplete';
@@ -10,6 +10,7 @@ const ob: Observable<number> = of(1, 2, 3)
     .pipe(
       delay(800),
     )),
+    tap( (value) => console.log(value)),
   );
 
 ob.subscribe(data => $('#time').text(data));
